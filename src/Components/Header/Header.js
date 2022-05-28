@@ -18,6 +18,7 @@ const Header = () => {
                 <nav className='header-right'>
                     <Link to="/home">Home</Link>
                     <Link to="/feedback">Feedback</Link>
+                    <Link to="/blog">Blog</Link>
                     {
                         user ?
                         <Link to="/additems">Add Items</Link>
