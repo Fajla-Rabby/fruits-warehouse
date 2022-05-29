@@ -1,17 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import Item from '../Item/Item';
+import { Link, useNavigate } from 'react-router-dom';
+import ItemsHook from '../../Hooks/ItemsHook';
 
 const ManageInventory = () => {
+    const [items, setItems] = ItemsHook();
+    const navigate = useNavigate();
 
-    const [items, setItems] = useState([])
+    const navigateToItemDetails = (id) => {
+        navigate(`/inventory/${id}`);
+    };
 
-    useEffect(() => {
-        fetch('http://localhost:5000/items')
-            .then(res => res.json())
-            .then(data => setItems(data));
-    }, [])
+    const handleDelete = (id) => {
+        const proceed = window.confirm('Are you sure you want to delete?');
+        if (proceed) {
+            const url = `http://localhost:5000/items/${id}`;
+            fetch(url, {
+                method: 'DELETE',
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    const remaining = items.filter((item) => item._id !== id);
+                    setItems(remaining);
+                });
+        }
+    };
 
-   
     return (
         <div>
             <h1>All Items</h1>
@@ -19,18 +32,44 @@ const ManageInventory = () => {
                 <button className='btn btn-danger m-2'>Add New Item</button>
             </div>
             <div id='services' className='items'>
-            <div className="row">
-                <h1 className='title'>Our Items </h1>
-                <div className="items-container">
-                    {
-                        items.map(item => <Item
-                            key={item._id}
-                            service={item}
-                        ></Item>)
-                    }
+                <div className="row">
+
+                    <div className="items-container">
+                        {
+                            items.map(item => (
+                                <div key={item._id} className=' col-sm-12 col-md-6 col-lg-4'>
+                                    <div
+                                        className='card h-100 shadow p-2 mb-2 bg-white rounded'
+                                        style={{ width: '23rem' }}
+                                    >
+                                        <img src={item.img} className='card-img-top' alt='...' />
+                                        <div className='card-body'>
+                                            <h5 className='card-title'>Name: {item.name}</h5>
+                                            <h6 className='card-title'>Price: ${item.price}</h6>
+                                            <h6 className='card-title'>Quantity: {item.quantity}</h6>
+
+                                        </div>
+                                        <div className='card'>
+                                            <button
+                                                onClick={() => navigateToItemDetails(item._id)}
+                                                className='btn btn-danger'
+                                            >
+                                                Update
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(item._id)}
+                                                className='btn btn-danger mt-2'
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 };

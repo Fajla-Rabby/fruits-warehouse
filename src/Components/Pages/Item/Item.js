@@ -1,41 +1,29 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Items from '../Items/Items';
 import "./Item.css";
 
-const Item = (item) => {
-    const { name, img, price, _id } = item || {};
+const Item = ({ item }) => {
+    const { _id, name, img, Description, price, quantity } =
+        item;
     const navigate = useNavigate();
-    const navigateToServiceDetail = id => {
-        navigate('/item/${id}');
-    }
 
-    const  handleDelete = id =>
-    {
-        const proceed = window.confirm('Are You sure?');
-        if(proceed)
-        {
-            const url = `http://localhost:5000/items/${id}`;
-            fetch(url, {
-                method: 'DELETE'
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                const remaining = Items.filter(item => item._id !== id);
-                // setItems(remaining);
-            })
-        }
-    }
+    const navigateToItemDetails = (id) => {
+        navigate(`/manageinventory/${id}`);
+    };
+
     return (
+
         <div className='service'>
             <img className='images' src={img} alt="" />
             <h2>{name}</h2>
+            <p>Details: {Description}</p>
             <p>Price: ${price}</p>
+            <p>Quantity: {quantity}</p>
+
             <div className='flex justify-center m-1'>
-                <button onClick={() => navigateToServiceDetail()} className='button m-1'>Update</button>
-                <br />
-                <button onClick={() => handleDelete(_id)} className='button m-1'>Delete</button>
+                <button onClick={() => navigateToItemDetails(_id)} className='button m-1 bg'>Update</button>
+
+
             </div>
         </div>
     );
