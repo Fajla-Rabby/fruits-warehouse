@@ -7,7 +7,7 @@ const Items = () => {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/items')
+        fetch('https://shrouded-plateau-29537.herokuapp.com/items')
             .then((res) => res.json())
             .then((data) => setItems(data));
     }, []);

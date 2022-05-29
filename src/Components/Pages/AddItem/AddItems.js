@@ -1,13 +1,18 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AddItems = () => {
     const { register, handleSubmit } = useForm();
 
+    const notify = () => toast("Item Added");
+
 
     const onSubmit = data => {
         console.log(data);
-        const url = `http://localhost:5000/items/`;
+        const url = `https://shrouded-plateau-29537.herokuapp.com/items/`;
         fetch(url, 
             {
                 method: 'POST',
@@ -34,7 +39,9 @@ const AddItems = () => {
                     <textarea className='mb-2' placeholder='Description' {...register("Description")} />
                     <input className='mb-2' placeholder='Price' {...register("price")} />
                     <input className='mb-2' placeholder='Quantity' {...register("Quantity")} />
-                    <input className='btn btn-danger' type="submit" value="Add Item" />
+                    <input onClick={notify} className='btn btn-danger' type="submit" value="Add Item" />
+                    <ToastContainer />
+
                 </form>
             </div>
         </div>

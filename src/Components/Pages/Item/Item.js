@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import "./Item.css";
 
 const Item = ({ item }) => {
-    const { _id, name, img, Description, price, quantity } =
+    const { _id, name, img, Description, price, Quantity } =
         item;
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const Item = ({ item }) => {
             <h2>{name}</h2>
             <p>Details: {Description}</p>
             <p>Price: ${price}</p>
-            <p>Quantity: {quantity}</p>
+            <p>Quantity: {Quantity}</p>
 
             <div className='flex justify-center m-1'>
                 <button onClick={() => navigateToItemDetails(_id)} className='button m-1 bg'>Update</button>

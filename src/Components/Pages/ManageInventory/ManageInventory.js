@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import ItemsHook from '../../Hooks/ItemsHook';
 
 const ManageInventory = () => {
@@ -12,7 +12,7 @@ const ManageInventory = () => {
     const handleDelete = (id) => {
         const proceed = window.confirm('Are you sure you want to delete?');
         if (proceed) {
-            const url = `http://localhost:5000/items/${id}`;
+            const url = `https://shrouded-plateau-29537.herokuapp.com/items/${id}`;
             fetch(url, {
                 method: 'DELETE',
             })
@@ -44,9 +44,9 @@ const ManageInventory = () => {
                                     >
                                         <img src={item.img} className='card-img-top' alt='...' />
                                         <div className='card-body'>
-                                            <h5 className='card-title'>Name: {item.name}</h5>
+                                            <h5 className='card-title'>{item.Name}</h5>
                                             <h6 className='card-title'>Price: ${item.price}</h6>
-                                            <h6 className='card-title'>Quantity: {item.quantity}</h6>
+                                            <h6 className='card-title'>Quantity: {item.Quantity}</h6>
 
                                         </div>
                                         <div className='card'>
